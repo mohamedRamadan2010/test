@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body id="mybody">
+    
+<!--     <button id='btnGiveCommand'>Give Command!</button> -->
+    <br><br>
+    <span id='message'></span>
+    <br><br>
+    
+<!--     <input id='chkSteve' type="checkbox"> Steve Rogers -->
+<!--     <br> -->
+<!--     <input id='chkTony' type="checkbox"> Tony Stark -->
+<!--     <br> -->
+<!--     <input id='chkBruce' type="checkbox"> Bruce Banner -->
+<!--     <br> -->
+<!--     <input id='chkNick' type="checkbox"> Nick Fury -->
+    
+    <script>
+	
+			navigator.mediaDevices.getUserMedia({ audio: true })
+		  .then(function(stream) {
+			console.log('You let me use your mic!')
+		  })
+		  .catch(function(err) {
+			console.log('No mic for you!')
+		  });
+		  
+		
+        var message = document.querySelector('#message');
+
+        var SpeechRecognition = SpeechRecognition || webkitSpeechRecognition;
+        var SpeechGrammarList = SpeechGrammarList || webkitSpeechGrammarList;
+
+        var grammar = '#JSGF V1.0;'
+
+        var recognition = new SpeechRecognition();
+        var speechRecognitionList = new SpeechGrammarList();
+        speechRecognitionList.addFromString(grammar, 1);
+        recognition.grammars = speechRecognitionList;
+        recognition.lang = 'en-US';
+        recognition.interimResults = false;
+
+        recognition.onresult = function(event) {
+            var last = event.results.length - 1;
+            var command = event.results[last][0].transcript;
+            message.textContent = 'Voice Input: ' + command + '.';
+
+            if(command.toLowerCase().includes('fire')){
+            	var div = document.createElement('div');
+
+                div.className = 'row';
+
+                div.innerHTML = "<iframe width='100%' height='800' src='https://www.youtube.com/embed/lUojO1HvC8c?autoplay=1&v=VIDEOID' frameborder='0' allow='accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture' allowfullscreen ></iframe>"
+            	
+            	document.getElementById("fire").appendChild(div);
+            	
+            	document.getElementById("rebot").style.display ="none";
+            }
+            else if (command.toLowerCase().includes('sink'))
+			{
+                var div = document.createElement('div');
+
+                div.className = 'row';
+
+                div.innerHTML = "<iframe width='100%' height='800' src='https://www.youtube.com/watch?v=RE8Iy9BsU_M' frameborder='0' allow='accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture' allowfullscreen ></iframe>"
+            	
+            	document.getElementById("fire").appendChild(div);
+            	
+            	document.getElementById("rebot").style.display ="none";
+            }
+            else if (command.toLowerCase() === 'select bruce'){
+                document.querySelector('#chkBruce').checked = true;
+            }
+            else if (command.toLowerCase() === 'select nick'){
+                document.querySelector('#chkNick').checked = true;
+            }   
+        };
+
+        recognition.onspeechend = function() {
+            recognition.stop();
+        };
+
+        recognition.onerror = function(event) {
+            message.textContent = 'Error occurred in recognition: ' + event.error;
+        }        
+
+//         document.querySelector('#btnGiveCommand').addEventListener('click', function(){
+//             recognition.start();
+
+//         });
+ 		
+ 		recognition.start();
+		
+		var elem = document.documentElement;
+		elem.requestFullscreen();
+
+
+    </script>
+    
+    
+       <div id="fire"  >
+    
+   
+    
+    </div>
+    
+   
+    <div id="rebot" >
+	
+	<!-- <iframe src="https://giphy.com/embed/VWw8pthDfGkxO" width="100%" height="600" frameBorder="0" class="giphy-embed" allowFullScreen onclick="$('#btnGiveCommand').click();"></iframe>-->
+	<img src="rebot.jpg" />
+   
+    </div>
+</body>
+</html>
